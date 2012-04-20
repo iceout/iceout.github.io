@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[iceout's Octopress Blog]]></title>
+  <title><![CDATA[iceout's blog]]></title>
   <link href="http://iceout.github.com/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-04-21T01:47:40+08:00</updated>
+  <updated>2012-04-21T02:36:54+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -20,17 +20,27 @@
     <id>http://iceout.github.com/blog/2012/04/21/hello-world</id>
     <content type="html"><![CDATA[<h2>C</h2>
 
-<pre><code>int main()
-{
-    printf("Hello, World!\n");
-    return 0;
-}
-</code></pre>
+<figure class='code'><figcaption><span>hello </span><a href='http://iceout.github.com/blog/2012/04/21/hello-world/'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>Python</h2>
 
-<pre><code>print 'Hello, World!'
-</code></pre>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&#39;Hello, World!&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
