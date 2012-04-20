@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[iceout's Octopress Blog]]></title>
+  <link href="http://iceout.github.com/atom.xml" rel="self"/>
+  <link href="http://iceout.github.com/"/>
+  <updated>2012-04-21T01:47:40+08:00</updated>
+  <id>http://iceout.github.com/</id>
+  <author>
+    <name><![CDATA[iceout]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://iceout.github.com/blog/2012/04/21/hello-world/"/>
+    <updated>2012-04-21T01:31:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/04/21/hello-world</id>
+    <content type="html"><![CDATA[<h2>C</h2>
+
+<pre><code>int main()
+{
+    printf("Hello, World!\n");
+    return 0;
+}
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code>print 'Hello, World!'
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
