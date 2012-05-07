@@ -1,24 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[iceout's blog]]></title>
-  <link href="http://iceout.github.com/atom.xml" rel="self"/>
-  <link href="http://iceout.github.com/"/>
-  <updated>2012-05-07T13:23:05+08:00</updated>
-  <id>http://iceout.github.com/</id>
-  <author>
-    <name><![CDATA[iceout]]></name>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>poj 1035:Spell checker - iceout's blog</title>
+    <meta name="author" content="iceout">
+
     
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+    <meta name="description" content="Poj 1035:Spell Checker 题目说明 原题在这里。 很简单的一道题，输入分为两部分，首先是一个字典,最多包含10000个词语。以一个“#”作为字典的结束。
+剩余部分为需要检查的词语，也是以“#”结束。 所有的词语都是由小写字母组成，最多包含15个字母。每个词占语一行。 &hellip;">
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
-  
-  <entry>
-    <title type="html"><![CDATA[poj 1035:Spell checker]]></title>
-    <link href="http://iceout.github.com/blog/2012/05/07/poj-1035/"/>
-    <updated>2012-05-07T12:36:00+08:00</updated>
-    <id>http://iceout.github.com/blog/2012/05/07/poj-1035</id>
-    <content type="html"><![CDATA[<h2>题目说明</h2>
+    <link href="/atom.xml" rel="alternate" title="iceout's blog" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.png" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    
+
+</head>
+
+<body>
+	<header class="inner"><h1 class="left"><a href="/">iceout's blog</a></h1>
+<nav class="menu left"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<div class="right">
+	<form class="search right" action="http://google.com/search" method="get">
+		<input class="left" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:iceout.github.com">
+	</form>
+	<div class="social right">
+		
+		
+		<a class="google" href="https://plus.google.com/112831722003667544475" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/ice404out" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/iceout" title="GitHub">GitHub</a>
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</div>
+
+</header>
+	
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/ice404out">ice404out</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('ice404out', 4, false);
+	})(jQuery);
+</script>
+
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">Poj 1035:Spell Checker</h1>
+    <div class="entry"><h2>题目说明</h2>
 
 <p><a href="http://poj.org/problem?id=1035">原题在这里。</a></p>
 
@@ -243,47 +296,74 @@
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
   
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://iceout.github.com/blog/2012/04/21/hello-world/"/>
-    <updated>2012-04-21T01:31:00+08:00</updated>
-    <id>http://iceout.github.com/blog/2012/04/21/hello-world</id>
-    <content type="html"><![CDATA[<h2>C</h2>
-
-<figure class='code'><figcaption><span>hello </span><a href='http://iceout.github.com/blog/2012/04/21/hello-world/'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Python</h2>
+<time datetime="2012-05-07T12:36:00+08:00" pubdate data-updated="true">May 7<span>th</span>, 2012</time></div>
+        <div class="tags">
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&#39;Hello, World!&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Java</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
+<div class="cat">
   
-</feed>
+    <a class='category' href='/blog/categories/poj/'>poj</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer class="inner">Copyright &copy; 2012 iceout's blog</footer>
+	<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script src="/javascripts/slash.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'iceoutgithubblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://iceout.github.com/blog/2012/05/07/poj-1035/';
+        var disqus_url = 'http://iceout.github.com/blog/2012/05/07/poj-1035/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+</html>

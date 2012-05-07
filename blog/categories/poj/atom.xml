@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: poj | iceout's blog]]></title>
+  <link href="http://iceout.github.com/blog/categories/poj/atom.xml" rel="self"/>
+  <link href="http://iceout.github.com/"/>
+  <updated>2012-05-07T13:23:05+08:00</updated>
+  <id>http://iceout.github.com/</id>
+  <author>
+    <name><![CDATA[iceout]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[poj 1035:Spell checker]]></title>
+    <link href="http://iceout.github.com/blog/2012/05/07/poj-1035/"/>
+    <updated>2012-05-07T12:36:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/05/07/poj-1035</id>
+    <content type="html"><![CDATA[<h2>题目说明</h2>
+
+<p><a href="http://poj.org/problem?id=1035">原题在这里。</a></p>
+
+<p>很简单的一道题，输入分为两部分，首先是一个字典,最多包含10000个词语。以一个“#”作为字典的结束。
+剩余部分为需要检查的词语，也是以“#”结束。</p>
+
+<p>所有的词语都是由小写字母组成，最多包含15个字母。每个词占语一行。
+如果所检查的词语正确则输出“is correct”，否则则根据三条规则输出相近的词语。三条规则如下：</p>
+
+<ul>
+<li>leting of one letter from the word;</li>
+<li>replacing of one letter in the word with an arbitrary letter;</li>
+<li>inserting of one arbitrary letter into the word.</li>
+</ul>
+
+
+<h2>程序代码</h2>
+
+<p>我的初步解法内存消耗360K，时间235MS。</p>
+
+<p>待优化。
+```c++ poj1035:spell checker http://poj.org/problem?id=1035</p>
+
+<h1>include &lt;stdio.h></h1>
+
+<h1>include &lt;string.h></h1>
+
+<p>char dic[10000][16];</p>
+
+<p>int check(char <em>s, char </em>b, int small);</p>
+
+<p>int main(int argc, char * const argv[])
+{</p>
+
+<pre><code>int i, j;
+int numdic = 0;
+
+char word[16];
+int lenword = 0;
+int replace[10000];
+int t;
+int count;
+
+while (1 == 1) {
+    scanf("%s", dic[numdic]);
+    if (dic[numdic][0] == '#') {
+        break;
+    }
+    numdic++;
+}
+
+while (1 == 1) {
+    scanf("%s", word);
+    if (word[0] == '#') {
+        break;
+    }
+    printf("%s", word);
+    lenword = strlen(word);
+    memset(replace, -1, 10000);
+    t = 0;
+    count = -1;
+    i = 0;
+    while (i &lt; numdic) {
+        if (lenword == strlen(dic[i])) {
+            count = 0;
+            for (j = 0; j &lt; lenword; j++) {
+                if (word[j] != dic[i][j]) {
+                    count++;
+                }
+            }
+            if (count == 0) {
+                printf(" is correct\n");
+                break;
+            }
+            else if (count == 1){
+                replace[t++] = i;
+            }
+        }
+        else if (lenword+1 == strlen(dic[i])) {
+            if (check(word, dic[i], lenword) == 1) {
+                replace[t++] = i;
+            }
+        }
+        else if (lenword-1 == strlen(dic[i])) {
+            if (check(dic[i], word, lenword-1) == 1) {
+                replace[t++] = i;
+            }
+        }
+        i++;
+    }
+    if (count != 0) {
+        printf(":");
+        j = 0;
+        while (j &lt; t) {
+            printf(" %s", dic[replace[j++]]);
+        }
+        printf("\n");
+    }
+}
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>int check(char <em>s, char </em>b, int small)
+{</p>
+
+<pre><code>int i = 0, j = 0;
+
+while (s[i] == b[j]) {
+    i++;
+    j++;
+    if (i &gt;= small) {
+        return 1;
+    }
+}
+j++;
+while (s[i] == b[j]) {
+    i++;
+    j++;
+    if (i &gt;= small) {
+        return 1;
+    }
+}
+
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
