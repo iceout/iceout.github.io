@@ -20,6 +20,18 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
     
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31515120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -88,13 +100,18 @@
 </ul>
 
 
+<!--more-->
+
+
 <h2>程序代码</h2>
 
-<p>我的初步解法内存消耗360K，时间235MS。</p>
+<p>我的初步解法内存消耗360K，时间235MS。代码在<a href="https://github.com/iceout/poj/blob/a76987067dc373785e245cf990e8258ea21c2984/poj1035.c">这里</a>，其实结构还算清晰，就是效率不高，-_-，待优化。</p>
 
-<p>待优化。</p>
+<p><em>update：</em>
+进行了一些优化，首先进行排序，然后通过二分法查找是否为正确的词语，是的话输出，否则就查找相近的词语。
+内存增加到了440K，时间缩短为125MS。不知道那些60、70MS怎么优化的。。。</p>
 
-<figure class='code'><figcaption><span>poj1035:spell checker </span><a href='http://poj.org/problem?id=1035'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>poj1035:spell checker </span><a href='https://github.com/iceout/poj/blob/master/poj1035.c'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -194,12 +211,90 @@
 <span class='line-number'>98</span>
 <span class='line-number'>99</span>
 <span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
 </pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">char</span> <span class="n">dic</span><span class="p">[</span><span class="mi">10000</span><span class="p">][</span><span class="mi">16</span><span class="p">];</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">sorted</span><span class="p">[</span><span class="mi">10000</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="n">check</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">small</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">ncom</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">q</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">p</span> <span class="o">-</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">comp</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">q</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">p</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="p">(((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">p</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">dic</span><span class="p">[((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">p</span><span class="p">)[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">dic</span><span class="p">[((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
 </span><span class='line'><span class="p">{</span>
@@ -211,14 +306,21 @@
 </span><span class='line'>    <span class="kt">int</span> <span class="n">replace</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">t</span><span class="p">;</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">first</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">last</span><span class="p">;</span>
 </span><span class='line'>
+</span><span class='line'>    <span class="cm">/*Read the dict*/</span>
 </span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">dic</span><span class="p">[</span><span class="n">numdic</span><span class="p">]);</span>
 </span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">numdic</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;#&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>            <span class="k">break</span><span class="p">;</span>
 </span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">replace</span><span class="p">[</span><span class="n">numdic</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">sorted</span><span class="p">[</span><span class="n">numdic</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numdic</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">sorted</span><span class="p">[</span><span class="n">numdic</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">numdic</span><span class="p">]);</span>
 </span><span class='line'>        <span class="n">numdic</span><span class="o">++</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">qsort</span><span class="p">(</span><span class="n">sorted</span><span class="p">,</span> <span class="n">numdic</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">comp</span><span class="p">);</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
@@ -227,39 +329,70 @@
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
 </span><span class='line'>        <span class="n">lenword</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">memset</span><span class="p">(</span><span class="n">replace</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span> <span class="o">==</span> <span class="n">strlen</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">lenword</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="o">++</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lenword</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">first</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">while</span> <span class="p">(</span><span class="o">++</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">lenword</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">last</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">last</span> <span class="o">-</span> <span class="n">first</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">j</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">while</span> <span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">last</span> <span class="o">&lt;</span> <span class="n">first</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="k">break</span><span class="p">;</span>
 </span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">mid</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="p">(</span><span class="n">last</span> <span class="o">-</span> <span class="n">first</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">j</span> <span class="o">=</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">sorted</span><span class="p">[</span><span class="n">mid</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">word</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot; is correct</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 </span><span class='line'>                    <span class="k">break</span><span class="p">;</span>
 </span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
-</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="n">first</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="n">last</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </span><span class='line'>                <span class="p">}</span>
 </span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="n">strlen</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lenword</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="o">++</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lenword</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numdic</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">word</span><span class="p">,</span> <span class="n">lenword</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
 </span><span class='line'>                <span class="p">}</span>
 </span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">strlen</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">word</span><span class="p">,</span> <span class="n">lenword</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span> <span class="o">==</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">lenword</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dic</span><span class="p">[</span><span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>                    <span class="p">}</span>
 </span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lenword</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">dic</span><span class="p">[</span><span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">lenword</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="n">replace</span><span class="p">[</span><span class="n">t</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">break</span><span class="p">;</span>
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">qsort</span><span class="p">(</span><span class="n">replace</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">ncom</span><span class="p">);</span>
 </span><span class='line'>            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
 </span><span class='line'>            <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'>            <span class="k">while</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
