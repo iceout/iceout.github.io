@@ -7,9 +7,9 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="A Program of Changing Keyboard Mapping 一个修改键盘映射的程序 以前修改别人的代码而成的键盘映射程序，今天无意中看到了，共享一下。
-该程序把1,2,3和4（非小键盘）四个键分别映射成为a,b,c和d.
-具体代码见程序的136~191行。 &hellip;">
+    <meta name="description" content="一个Python的bug 昨天阿文同学在写python程序时遇到一个奇怪的错误，经过搜索发现原来是python的一个bug。
+python的说明在这里,
+主要是这句话: The destruction of modules and objects in modules is done in &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -83,6 +83,51 @@
 </script>
 
 	<div id="content" class="inner">
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/06/01/a-bug-of-python/">一个Python的bug</a></h1>
+    <div class="entry">
+        <p>昨天阿文同学在写python程序时遇到一个奇怪的错误，经过搜索发现原来是python的一个bug。
+python的说明在<a href="http://docs.python.org/c-api/init.html#Py_Finalize">这里</a>,
+主要是这句话:</p>
+
+<blockquote><p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
+this may cause destructors (__del__() methods) to fail when they depend on
+other objects (even functions) or modules.</p></blockquote>
+
+<p>由于析构的顺序是随机的，所以会遇到一些意想不到的问题。</p>
+
+
+        
+        <a href="/blog/2012/06/01/a-bug-of-python/" class="more-link">Read on &rarr;</a>
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-01T14:22:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
 
 
     <article class="post">

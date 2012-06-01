@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | iceout's blog]]></title>
+  <link href="http://iceout.github.com/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://iceout.github.com/"/>
+  <updated>2012-06-01T15:19:14+08:00</updated>
+  <id>http://iceout.github.com/</id>
+  <author>
+    <name><![CDATA[iceout]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[一个Python的bug]]></title>
+    <link href="http://iceout.github.com/blog/2012/06/01/a-bug-of-python/"/>
+    <updated>2012-06-01T14:22:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/06/01/a-bug-of-python</id>
+    <content type="html"><![CDATA[<p>昨天阿文同学在写python程序时遇到一个奇怪的错误，经过搜索发现原来是python的一个bug。
+python的说明在<a href="http://docs.python.org/c-api/init.html#Py_Finalize">这里</a>,
+主要是这句话:</p>
+
+<blockquote><p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
+this may cause destructors (__del__() methods) to fail when they depend on
+other objects (even functions) or modules.</p></blockquote>
+
+<p>由于析构的顺序是随机的，所以会遇到一些意想不到的问题。</p>
+
+<!-- more -->
+
+
+<p>比如说，这段python代码：
+```python
+class Person:</p>
+
+<pre><code>num = 0
+def __init__(self, name, age):
+    Person.num += 1
+    self.name = name
+    self.age = age
+
+def __del__(self):
+    Person.num -= 1
+
+def tell(self):
+    print 'Person name is %s and age is %s' % (self.name, self.age)
+</code></pre>
+
+<p>class Teacher(Person):</p>
+
+<pre><code>def __init__(self, name, age, salary):
+    Person.__init__(self, name, age)
+    self.salary = salary
+
+def __del__(self):
+    Person.__del__(self)
+
+def tell(self):
+    Person.tell(self)
+    print 'salary is', self.salary
+</code></pre>
+
+<p>t = Teacher('evan', 21, 10000)
+t.tell()
+```
+当程序执行完毕，调用__del__析构时，Person的__del__先于t的__del__被调用，所以当调用t的__del__时，就会遇到这个错误：</p>
+
+<blockquote><p>Exception AttributeError: "'NoneType' object has no attribute '__del__'" in
+&lt;bound method Teacher.__del__ of &lt;__main__.Teacher instance at 0xb72cbd0c>> ignored</p></blockquote>
+
+<p>一个解决方案是不把对象放到module层，即把最后两行代码改为：
+```python
+def main():</p>
+
+<pre><code>t = Teacher('evan', 21, 10000)
+t.tell()
+</code></pre>
+
+<p>if <strong>name</strong> == "<strong>main</strong>":</p>
+
+<pre><code>main()
+</code></pre>
+
+<p>```</p>
+
+<p>参看资料在<a href="https://groups.google.com/d/topic/python-cn/Md9OYHZ4JZk/discussion">这里</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

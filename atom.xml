@@ -4,7 +4,7 @@
   <title><![CDATA[iceout's blog]]></title>
   <link href="http://iceout.github.com/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-05-23T13:35:49+08:00</updated>
+  <updated>2012-06-01T15:19:14+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[一个Python的bug]]></title>
+    <link href="http://iceout.github.com/blog/2012/06/01/a-bug-of-python/"/>
+    <updated>2012-06-01T14:22:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/06/01/a-bug-of-python</id>
+    <content type="html"><![CDATA[<p>昨天阿文同学在写python程序时遇到一个奇怪的错误，经过搜索发现原来是python的一个bug。
+python的说明在<a href="http://docs.python.org/c-api/init.html#Py_Finalize">这里</a>,
+主要是这句话:</p>
+
+<blockquote><p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
+this may cause destructors (__del__() methods) to fail when they depend on
+other objects (even functions) or modules.</p></blockquote>
+
+<p>由于析构的顺序是随机的，所以会遇到一些意想不到的问题。</p>
+
+<!-- more -->
+
+
+<p>比如说，这段python代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">Person</span><span class="o">.</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">Person</span><span class="o">.</span><span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;Person name is </span><span class="si">%s</span><span class="s"> and age is </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">salary</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">Person</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">Person</span><span class="o">.</span><span class="n">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">Person</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;salary is&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">salary</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="s">&#39;evan&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+</span><span class='line'><span class="n">t</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当程序执行完毕，调用__del__析构时，Person的__del__先于t的__del__被调用，所以当调用t的__del__时，就会遇到这个错误：</p>
+
+<blockquote><p>Exception AttributeError: &#8220;&#8216;NoneType&#8217; object has no attribute &#8216;__del__&#8217;&#8221; in
+&lt;bound method Teacher.__del__ of &lt;__main__.Teacher instance at 0xb72cbd0c>> ignored</p></blockquote>
+
+<p>一个解决方案是不把对象放到module层，即把最后两行代码改为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">t</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="s">&#39;evan&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参看资料在<a href="https://groups.google.com/d/topic/python-cn/Md9OYHZ4JZk/discussion">这里</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[a program of changing keyboard mapping]]></title>
