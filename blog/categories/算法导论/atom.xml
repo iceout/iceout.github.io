@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 算法导论 | iceout's blog]]></title>
+  <link href="http://iceout.github.com/blog/categories/算法导论/atom.xml" rel="self"/>
+  <link href="http://iceout.github.com/"/>
+  <updated>2012-08-01T17:31:44+08:00</updated>
+  <id>http://iceout.github.com/</id>
+  <author>
+    <name><![CDATA[iceout]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Chapter 12 二叉查找树]]></title>
+    <link href="http://iceout.github.com/blog/2012/07/13/chapter-12-er-cha-cha-zhao-shu/"/>
+    <updated>2012-07-13T14:41:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/07/13/chapter-12-er-cha-cha-zhao-shu</id>
+    <content type="html"><![CDATA[<h2 id="section">1. 二叉查找树</h2>
+<p>二叉查找树的性质 ：一个节点的key值大于等于它所有左子树节点的值，小于等于它所有右子树节点的值。 </p>
+
+<p>中序遍历(inorder-tree-walk)的时间为<script type="math/tex">\Theta(n)</script>.</p>
+
+<p>12.1-3 非递归 不用栈 中序遍历</p>
+
+<p><code>c++
+/* 通过将节点的左子树中最右边节点的右孩子的指向（即q-&gt;right = p;）实现回溯。*/
+Inorder Tree Walk (Node * p)
+{
+    Node * preprinted = NULL;
+    while (p) {
+        Node * q = p-&gt;left;
+        if (q) {
+            while (q != preprinted &amp;&amp; q-&gt;right) {
+                q = q-&gt;right;
+            }
+            if (q != preprinted) {
+                q-&gt;right = p;
+                p = p-&gt;left;
+                continue;
+            }
+            else {
+                q-&gt;right = NULL;
+            }
+        }
+        printf("%d\n", p-&gt;key);
+        preprinted = p;
+        p = p-&gt; right;
+    }
+}
+</code></p>
+
+<h2 id="section-1">2. 查询二叉查找树</h2>
+
+<h2 id="section-2">3. 插入和删除</h2>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CLRS chapter8 Sorting in Linear Time]]></title>
+    <link href="http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/"/>
+    <updated>2012-06-15T16:42:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time</id>
+    <content type="html"><![CDATA[<p>之前介绍的排序算法都是属于比较排序算法，他们的时间下界为<script type="math/tex">\Omega(n\lg n)</script>。而一些非比较算法的时间复杂度可以为<script type="math/tex">\Theta(n)</script>。</p>
+
+<h2 id="section">1.排序算法的时间下界</h2>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CLRS第七章快速排序]]></title>
+    <link href="http://iceout.github.com/blog/2012/06/13/clrsdi-qi-zhang-kuai-su-pai-xu/"/>
+    <updated>2012-06-13T21:32:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/06/13/clrsdi-qi-zhang-kuai-su-pai-xu</id>
+    <content type="html"><![CDATA[<p>虽然快速排序最坏时间复杂度为<script type="math/tex">\Theta(n^2)</script>，但是其平均复杂度为<script type="math/tex">\Theta(n\lg n)</script>，
+且常数因子很小，所以快速排序通常是用于排序的最佳实践选择。</p>
+
+<h2 id="section">1.快速排序的描述</h2>
+<p>快速排序也是利用了分治的思想，先从数据集合里面选出一个元素作为主元（pivot element），根据主元把数据集分为两个子集，然后对子集进行快速排序。下面是代码描述：</p>
+
+<p>```python
+def QUICKSORT(A, begin, end):
+    if begin &lt; end:
+        mid = PARTITION(A, begin, end)
+        QUICKSORT(A, begin, mid-1)
+        QUICKSORT(A, mid, end)</p>
+
+<p>def PARTITION(A, begin, end):
+    x = A[end]
+    j = begin
+    i = begin
+    while j &lt; end:
+        if A[j] &lt;= x:
+            exchange(A[i], A[j])
+            i += 1
+        j += 1
+    exchange(A[i], A[end])
+    return i
+```</p>
+
+<h2 id="section-1">2.快速排序的性能</h2>
+<p>最坏和最好分别为\(\Theta(n^2)\)和\(\Theta(n\lg n)\)。
+考虑平均情况时需要注意到：<strong>平均情况与最佳情况很接近</strong>。</p>
+
+<h2 id="section-2">3.快排的随机化版本</h2>
+<p>在算法中加入随机化成分，从而能够获得较好的平均性能。</p>
+
+<p>在PARTITION开头处加入两行代码可以获得RANDOMIZED-PARTITION。</p>
+
+<p><code>python
+i = RANDOM(begin, end)
+exchange(A[end], A[i])
+</code></p>
+
+<h2 id="section-3">4.快排分析</h2>
+<ol>
+  <li>最坏情况分析
+具体不写了，结论\(\Theta(n^2)\)</li>
+  <li>
+    <p>期望运行时间
+定义随机变量</p>
+
+<script type="math/tex; mode=display">
+X_{ij} = I\{z_i与z_j进行比较\};
+</script>
+
+    <p>算法总的比较次数（我们不关心执行一次PARTITIOM比较的次数）：</p>
+
+<script type="math/tex; mode=display">
+X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij};
+</script>
+
+<script type="math/tex; mode=display">E[X] = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} Pr\{z_i与z_j进行比较\};</script>
+
+<script type="math/tex; mode=display">Pr\{z_i与z_j进行比较\}=\frac{1}{j-i+1}+\frac{1}{j-i+1}=\frac{2}{j-i+1};</script>
+
+<script type="math/tex; mode=display">E[X]=\sum_{i=1}^{n-1}
+\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n);</script>
+  </li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

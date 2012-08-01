@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 笔记 | iceout's blog]]></title>
+  <link href="http://iceout.github.com/blog/categories/笔记/atom.xml" rel="self"/>
+  <link href="http://iceout.github.com/"/>
+  <updated>2012-08-01T17:31:44+08:00</updated>
+  <id>http://iceout.github.com/</id>
+  <author>
+    <name><![CDATA[iceout]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CLRS chapter8 Sorting in Linear Time]]></title>
+    <link href="http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/"/>
+    <updated>2012-06-15T16:42:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time</id>
+    <content type="html"><![CDATA[<p>之前介绍的排序算法都是属于比较排序算法，他们的时间下界为<script type="math/tex">\Omega(n\lg n)</script>。而一些非比较算法的时间复杂度可以为<script type="math/tex">\Theta(n)</script>。</p>
+
+<h2 id="section">1.排序算法的时间下界</h2>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -7,8 +7,8 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="践行GTD一周总结 从5月29号开始决定有一次实践GTD,虽然不是最认真的一次,但是到现在为止却也收获颇丰. 回顾 首先简要回顾一下一周的记录情况: May 29: 计划任务共用时4:11:48,有一些任务没有写在任务列表上.
-May 30: 这一天共用时6:37:57,收集工作比第一天有所进步 &hellip;">
+    <meta name="description" content="使用python压缩文件夹 今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。 不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下： 1
+2 &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -18,7 +18,10 @@ May 30: 这一天共用时6:37:57,收集工作比第一天有所进步 &hellip;"
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
+    <script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
     
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -85,45 +88,412 @@ May 30: 这一天共用时6:37:57,收集工作比第一天有所进步 &hellip;"
 
 
     <article class="post">
+    <h1 class="title"><a href="/blog/2012/08/01/shi-yong-pythonya-suo-wen-jian-jia/">使用python压缩文件夹</a></h1>
+    <div class="entry">
+        <p>今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。</p>
+
+<p>不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">zipfile</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">zipfolder</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">includeEmptyDIr</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+</span><span class="line">    <span class="n">empty_dirs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="nb">zip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">foldername</span><span class="p">):</span>
+</span><span class="line">        <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">foldername</span><span class="p">))</span>
+</span><span class="line">        <span class="n">empty_dirs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">dir</span> <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dirs</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">dir</span><span class="p">))</span> <span class="o">==</span> <span class="p">[]])</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+</span><span class="line">            <span class="nb">zip</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">join</span><span class="p">(</span><span class="n">rel_path</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">includeEmptyDIr</span><span class="p">:</span>
+</span><span class="line">            <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">empty_dirs</span><span class="p">:</span>
+</span><span class="line">                <span class="n">zif</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipInfo</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">rel_path</span><span class="p">,</span><span class="nb">dir</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+</span><span class="line">                <span class="nb">zip</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">zif</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">empty_dirs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="nb">zip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-01T17:23:00+08:00" pubdate data-updated="true">Aug 1<span>st</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/07/13/chapter-12-er-cha-cha-zhao-shu/">Chapter 12 二叉查找树</a></h1>
+    <div class="entry">
+        <h2 id="section">1. 二叉查找树</h2>
+<p>二叉查找树的性质 ：一个节点的key值大于等于它所有左子树节点的值，小于等于它所有右子树节点的值。 </p>
+
+<p>中序遍历(inorder-tree-walk)的时间为<script type="math/tex">\Theta(n)</script>.</p>
+
+<p>12.1-3 非递归 不用栈 中序遍历</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="cm">/* 通过将节点的左子树中最右边节点的右孩子的指向（即q-&gt;right = p;）实现回溯。*/</span>
+</span><span class="line"><span class="n">Inorder</span> <span class="n">Tree</span> <span class="n">Walk</span> <span class="p">(</span><span class="n">Node</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">Node</span> <span class="o">*</span> <span class="n">preprinted</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">    <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="n">Node</span> <span class="o">*</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="k">while</span> <span class="p">(</span><span class="n">q</span> <span class="o">!=</span> <span class="n">preprinted</span> <span class="o">&amp;&amp;</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">!=</span> <span class="n">preprinted</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+</span><span class="line">                <span class="k">continue</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">            <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">);</span>
+</span><span class="line">        <span class="n">preprinted</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span> <span class="n">right</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-1">2. 查询二叉查找树</h2>
+
+<h2 id="section-2">3. 插入和删除</h2>
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-13T14:41:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/算法导论/'>算法导论</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/">CLRS Chapter8 Sorting in Linear Time</a></h1>
+    <div class="entry">
+        <p>之前介绍的排序算法都是属于比较排序算法，他们的时间下界为<script type="math/tex">\Omega(n\lg n)</script>。而一些非比较算法的时间复杂度可以为<script type="math/tex">\Theta(n)</script>。</p>
+
+<h2 id="section">1.排序算法的时间下界</h2>
+
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-15T16:42:00+08:00" pubdate data-updated="true">Jun 15<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/笔记/'>笔记</a>, <a class='category' href='/blog/categories/算法导论/'>算法导论</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/06/13/clrsdi-qi-zhang-kuai-su-pai-xu/">CLRS第七章快速排序</a></h1>
+    <div class="entry">
+        <p>虽然快速排序最坏时间复杂度为<script type="math/tex">\Theta(n^2)</script>，但是其平均复杂度为<script type="math/tex">\Theta(n\lg n)</script>，
+且常数因子很小，所以快速排序通常是用于排序的最佳实践选择。</p>
+
+<h2 id="section">1.快速排序的描述</h2>
+<p>快速排序也是利用了分治的思想，先从数据集合里面选出一个元素作为主元（pivot element），根据主元把数据集分为两个子集，然后对子集进行快速排序。下面是代码描述：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">QUICKSORT</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">begin</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+</span><span class="line">        <span class="n">mid</span> <span class="o">=</span> <span class="n">PARTITION</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span><span class="line">        <span class="n">QUICKSORT</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">        <span class="n">QUICKSORT</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">PARTITION</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class="line">    <span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
+</span><span class="line">    <span class="n">j</span> <span class="o">=</span> <span class="n">begin</span>
+</span><span class="line">    <span class="n">i</span> <span class="o">=</span> <span class="n">begin</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
+</span><span class="line">            <span class="n">exchange</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class="line">            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">    <span class="n">exchange</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="p">])</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">i</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-1">2.快速排序的性能</h2>
+<p>最坏和最好分别为\(\Theta(n^2)\)和\(\Theta(n\lg n)\)。
+考虑平均情况时需要注意到：<strong>平均情况与最佳情况很接近</strong>。</p>
+
+<h2 id="section-2">3.快排的随机化版本</h2>
+<p>在算法中加入随机化成分，从而能够获得较好的平均性能。</p>
+
+<p>在PARTITION开头处加入两行代码可以获得RANDOMIZED-PARTITION。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">i</span> <span class="o">=</span> <span class="n">RANDOM</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span><span class="line"><span class="n">exchange</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-3">4.快排分析</h2>
+<ol>
+  <li>最坏情况分析
+具体不写了，结论\(\Theta(n^2)\)</li>
+  <li>
+    <p>期望运行时间
+定义随机变量</p>
+
+<script type="math/tex; mode=display">
+X_{ij} = I\{z_i与z_j进行比较\};
+</script>
+
+    <p>算法总的比较次数（我们不关心执行一次PARTITIOM比较的次数）：</p>
+
+<script type="math/tex; mode=display">
+X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij};
+</script>
+
+<script type="math/tex; mode=display">E[X] = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} Pr\{z_i与z_j进行比较\};</script>
+
+<script type="math/tex; mode=display">Pr\{z_i与z_j进行比较\}=\frac{1}{j-i+1}+\frac{1}{j-i+1}=\frac{2}{j-i+1};</script>
+
+<script type="math/tex; mode=display">E[X]=\sum_{i=1}^{n-1}
+\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n);</script>
+  </li>
+</ol>
+
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-13T21:32:00+08:00" pubdate data-updated="true">Jun 13<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/算法导论/'>算法导论</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/06/12/clrs-06-12/">CLRS_06_12</a></h1>
+    <div class="entry">
+        <h1 id="section">第三章 函数的增长</h1>
+
+<h2 id="section-1">3.1 渐进记号</h2>
+<p>θ</p>
+
+<h2 id="section-2">习题解答：</h2>
+<ul>
+  <li>3.2-3
+ &gt;1. 证明：$$n! = \omeg
+ &gt;1. 这这正正证明证明证明证明证明：<script type="math/tex">n! = \omega()</script></li>
+</ul>
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-12T00:15:00+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/clrs/'>CLRS</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
     <h1 class="title"><a href="/blog/2012/06/03/jian-xing-gtd-yi-zhou-zong-jie/">践行GTD一周总结</a></h1>
     <div class="entry">
         <p>从5月29号开始决定有一次实践GTD,虽然不是最认真的一次,但是到现在为止却也收获颇丰.</p>
 
-<h3>回顾</h3>
-
+<h3 id="section">回顾</h3>
 <p>首先简要回顾一下一周的记录情况:</p>
 
 <ul>
-<li>May 29: 计划任务共用时4:11:48,有一些任务没有写在任务列表上.</li>
-<li>May 30: 这一天共用时6:37:57,收集工作比第一天有所进步.</li>
-<li>May 31-Jun 1: 这两天不但没有做好收集工作,而且在以前的不足上没有丝毫改进,一点也没有明确目标.两天分别用时1:59:35和1:45:49.</li>
-<li>Jun 2: 昨天上午睡了过去,下午工作还行,有计划有目标,共用时4:37:02,不过打羽毛球用了3小时&#8230;</li>
+  <li>May 29: 计划任务共用时4:11:48,有一些任务没有写在任务列表上.</li>
+  <li>May 30: 这一天共用时6:37:57,收集工作比第一天有所进步.</li>
+  <li>May 31-Jun 1: 这两天不但没有做好收集工作,而且在以前的不足上没有丝毫改进,一点也没有明确目标.两天分别用时1:59:35和1:45:49.</li>
+  <li>Jun 2: 昨天上午睡了过去,下午工作还行,有计划有目标,共用时4:37:02,不过打羽毛球用了3小时…</li>
 </ul>
 
-
-<h3>总结</h3>
-
+<h3 id="section-1">总结</h3>
 <p>然后说一下体会,利用Astrid收集管理任务列表挺不错,虽然同步到日历上有些不足;每天总结时用表格记录时间还是不方便;综上,以后不同步到日历了,利用日历记录每天的时间花费.</p>
 
 <p>另外发现用github page记录笔记挺好的,反正没什么见不得人的,虽然Evernote很不错,但是没有Linux客户端,而且排版让人很不爽,以后可以统一用github记录了,离线查看的问题以后想想办法.</p>
 
-<p>这周的优点:想了半天,好像没有什么优点,I&#8217;m on the way算是一个吧.</p>
+<p>这周的优点:想了半天,好像没有什么优点,I’m on the way算是一个吧.</p>
 
 <p>不足:目前最大的不足是目标不明确,任务定的过于笼统,不清晰,还有就是很多工作没有列在任务清单上,使得效率非常低下,虽然在任务清单上的工作效率也不高,-_-!,还有一点是工作中总是被打断,刚工作一会儿就手痒,想点点网页,这是病,得治!以后除了hacker news,其他都用google reader看.</p>
 
-<h3>结束</h3>
-
+<h3 id="section-2">结束</h3>
 <p>改进措施:</p>
 
 <ol>
-<li>Astrib不在同步到google日历,使用google日历总结每天的时间花费</li>
-<li>全面搜集,制定计划</li>
-<li>使用google reader查看网页</li>
-<li>使用github page记录笔记</li>
+  <li>Astrib不在同步到google日历,使用google日历总结每天的时间花费</li>
+  <li>全面搜集,制定计划</li>
+  <li>使用google reader查看网页</li>
+  <li>使用github page记录笔记</li>
 </ol>
 
-
 <p>Winter is coming.</p>
+
 
         
         
@@ -163,9 +533,11 @@ May 30: 这一天共用时6:37:57,收集工作比第一天有所进步 &hellip;"
 python的说明在<a href="http://docs.python.org/c-api/init.html#Py_Finalize">这里</a>,
 主要是这句话:</p>
 
-<blockquote><p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
+<blockquote>
+  <p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
 this may cause destructors (__del__() methods) to fail when they depend on
-other objects (even functions) or modules.</p></blockquote>
+other objects (even functions) or modules.</p>
+</blockquote>
 
 <p>由于析构的顺序是随机的，所以会遇到一些意想不到的问题。</p>
 
@@ -204,12 +576,11 @@ other objects (even functions) or modules.</p></blockquote>
     <article class="post">
     <h1 class="title"><a href="/blog/2012/05/22/a-program-of-changing-keyboard-mapping/">A Program of Changing Keyboard Mapping</a></h1>
     <div class="entry">
-        <h2>一个修改键盘映射的程序</h2>
+        <h2 id="section">一个修改键盘映射的程序</h2>
 
 <p>以前修改别人的代码而成的键盘映射程序，今天无意中看到了，共享一下。
 该程序把1,2,3和4（非小键盘）四个键分别映射成为a,b,c和d.
-具体代码见程序的136~191行。只在windows下有效。。。</p>
-
+具体代码见程序的136~191行。只在windows下有效。。。
 
         
         <a href="/blog/2012/05/22/a-program-of-changing-keyboard-mapping/" class="more-link">Read on &rarr;</a>
@@ -239,8 +610,7 @@ other objects (even functions) or modules.</p></blockquote>
     <article class="post">
     <h1 class="title"><a href="/blog/2012/05/07/poj-1035/">Poj 1035:Spell Checker</a></h1>
     <div class="entry">
-        <h2>题目说明</h2>
-
+        <h2 id="section">题目说明</h2>
 <p><a href="http://poj.org/problem?id=1035">原题在这里。</a></p>
 
 <p>很简单的一道题，输入分为两部分，首先是一个字典,最多包含10000个词语。以一个“#”作为字典的结束。
@@ -250,11 +620,10 @@ other objects (even functions) or modules.</p></blockquote>
 如果所检查的词语正确则输出“is correct”，否则则根据三条规则输出相近的词语。三条规则如下：</p>
 
 <ul>
-<li>leting of one letter from the word;</li>
-<li>replacing of one letter in the word with an arbitrary letter;</li>
-<li>inserting of one arbitrary letter into the word.</li>
+  <li>leting of one letter from the word;</li>
+  <li>replacing of one letter in the word with an arbitrary letter;</li>
+  <li>inserting of one arbitrary letter into the word. </li>
 </ul>
-
 
 
         
@@ -291,38 +660,52 @@ other objects (even functions) or modules.</p></blockquote>
     <article class="post">
     <h1 class="title"><a href="/blog/2012/04/21/hello-world/">Hello World</a></h1>
     <div class="entry">
-        <h2>C</h2>
+        <h1 id="h1">h1</h1>
 
-<figure class='code'><figcaption><span>hello </span><a href='http://iceout.github.com/blog/2012/04/21/hello-world/'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2 id="h2">h2</h2>
 
+<h3 id="h3">h3</h3>
 
-<h2>Python</h2>
+<h2 id="latex">Latex</h2>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&#39;Hello, World!&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><code>$$E = mc^2$$</code>的结果<script type="math/tex">E = mc^2</script></p>
 
+<p><code>\\(E=mc^2\\)</code>的结果\(E=mc^2\)</p>
 
-<h2>Java</h2>
+<h2 id="section">图片</h2>
+<p><img src="/uploads/Screenshot2.png" alt="octopress" title="God bless me!" />
+<img class="center" src="/uploads/Screenshot2.png" title="world peace #2" />
+left center right, center does not work.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2 id="c">C</h2>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>hello </span><a href="http://iceout.github.com/blog/2012/04/21/hello-world/">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="python">Python</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">print</span> <span class="s">&#39;Hello, World!&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="java">Java</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
         
         

@@ -1,0 +1,198 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>使用python压缩文件夹 - iceout's blog</title>
+    <meta name="author" content="iceout">
+
+    
+    <meta name="description" content="使用python压缩文件夹 今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。 不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下： 1
+2 &hellip;">
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="iceout's blog" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.png" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31515120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<header class="inner"><h1 class="left"><a href="/">iceout's blog</a></h1>
+<nav class="menu left"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<div class="right">
+	<form class="search right" action="http://google.com/search" method="get">
+		<input class="left" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:iceout.github.com">
+	</form>
+	<div class="social right">
+		
+		
+		<a class="google" href="https://plus.google.com/112831722003667544475" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/ice404out" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/iceout" title="GitHub">GitHub</a>
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</div>
+
+</header>
+	
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/ice404out">ice404out</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('ice404out', 4, false);
+	})(jQuery);
+</script>
+
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">使用python压缩文件夹</h1>
+    <div class="entry"><p>今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。</p>
+
+<p>不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">zipfile</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">zipfolder</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">includeEmptyDIr</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+</span><span class="line">    <span class="n">empty_dirs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="nb">zip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">foldername</span><span class="p">):</span>
+</span><span class="line">        <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">foldername</span><span class="p">))</span>
+</span><span class="line">        <span class="n">empty_dirs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">dir</span> <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dirs</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">dir</span><span class="p">))</span> <span class="o">==</span> <span class="p">[]])</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+</span><span class="line">            <span class="nb">zip</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">join</span><span class="p">(</span><span class="n">rel_path</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">includeEmptyDIr</span><span class="p">:</span>
+</span><span class="line">            <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">empty_dirs</span><span class="p">:</span>
+</span><span class="line">                <span class="n">zif</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipInfo</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">rel_path</span><span class="p">,</span><span class="nb">dir</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+</span><span class="line">                <span class="nb">zip</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">zif</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">empty_dirs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">    <span class="nb">zip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-01T17:23:00+08:00" pubdate data-updated="true">Aug 1<span>st</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer class="inner">Copyright &copy; 2012 iceout's blog</footer>
+	<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script src="/javascripts/slash.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'iceoutgithubblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://iceout.github.com/blog/2012/08/01/shi-yong-pythonya-suo-wen-jian-jia/';
+        var disqus_url = 'http://iceout.github.com/blog/2012/08/01/shi-yong-pythonya-suo-wen-jian-jia/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+</html>

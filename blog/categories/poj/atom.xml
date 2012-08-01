@@ -4,7 +4,7 @@
   <title><![CDATA[Category: poj | iceout's blog]]></title>
   <link href="http://iceout.github.com/blog/categories/poj/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-06-03T11:36:54+08:00</updated>
+  <updated>2012-08-01T17:31:44+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -18,8 +18,7 @@
     <link href="http://iceout.github.com/blog/2012/05/07/poj-1035/"/>
     <updated>2012-05-07T12:36:00+08:00</updated>
     <id>http://iceout.github.com/blog/2012/05/07/poj-1035</id>
-    <content type="html"><![CDATA[<h2>题目说明</h2>
-
+    <content type="html"><![CDATA[<h2 id="section">题目说明</h2>
 <p><a href="http://poj.org/problem?id=1035">原题在这里。</a></p>
 
 <p>很简单的一道题，输入分为两部分，首先是一个字典,最多包含10000个词语。以一个“#”作为字典的结束。
@@ -29,66 +28,54 @@
 如果所检查的词语正确则输出“is correct”，否则则根据三条规则输出相近的词语。三条规则如下：</p>
 
 <ul>
-<li>leting of one letter from the word;</li>
-<li>replacing of one letter in the word with an arbitrary letter;</li>
-<li>inserting of one arbitrary letter into the word.</li>
+  <li>leting of one letter from the word;</li>
+  <li>replacing of one letter in the word with an arbitrary letter;</li>
+  <li>inserting of one arbitrary letter into the word. </li>
 </ul>
-
 
 <!--more-->
 
-
-<h2>程序代码</h2>
-
+<h2 id="section-1">程序代码</h2>
 <p>我的初步解法内存消耗360K，时间235MS。代码在<a href="https://github.com/iceout/poj/blob/a76987067dc373785e245cf990e8258ea21c2984/poj1035.c">这里</a>，其实结构还算清晰，就是效率不高，-_-，待优化。</p>
 
 <p><em>update：</em>
 进行了一些优化，首先进行排序，然后通过二分法查找是否为正确的词语，是的话输出，否则就查找相近的词语。
-内存增加到了440K，时间缩短为125MS。不知道那些60、70MS怎么优化的。。。
-```c++ poj1035:spell checker https://github.com/iceout/poj/blob/master/poj1035.c</p>
+内存增加到了440K，时间缩短为125MS。不知道那些60、70MS怎么优化的。。。</p>
 
-<h1>include &lt;stdio.h></h1>
-
-<h1>include &lt;string.h></h1>
-
-<h1>include &lt;stdlib.h></h1>
+<p>```c++ poj1035:spell checker https://github.com/iceout/poj/blob/master/poj1035.c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h /></string.h></stdio.h></p>
 
 <p>char dic[10000][16];
 int sorted[10000][2];</p>
 
-<p>int check(char <em>s, char </em>b, int small);</p>
+<p>int check(char *s, char *b, int small);</p>
 
 <p>int ncom(const void * p, const void * q)
-{</p>
-
-<pre><code>return *(int *)p - *(int *)q;
-</code></pre>
-
-<p>}</p>
+{
+    return *(int *)p - *(int *)q;
+}</p>
 
 <p>int comp(const void * p, const void * q)
-{</p>
-
-<pre><code>if (((int *)p)[1] &lt; ((int *)q)[1]) {
-    return -1;
-}
-else if (((int *)p)[1] == ((int *)q)[1]) {
-    return strcmp(dic[((int *)p)[0]], dic[((int *)q)[0]]);
-}
-else {
-    return 1;
-}
-</code></pre>
-
-<p>}</p>
+{
+    if (((int *)p)[1] &lt; ((int *)q)[1]) {
+        return -1;
+    }
+    else if (((int *)p)[1] == ((int *)q)[1]) {
+        return strcmp(dic[((int *)p)[0]], dic[((int *)q)[0]]);
+    }
+    else {
+        return 1;
+    }
+}</p>
 
 <p>int main(int argc, char * const argv[])
-{</p>
+{
+    int i, j;
+    int numdic = 0;</p>
 
-<pre><code>int i, j;
-int numdic = 0;
-
-char word[16];
+<pre><code>char word[16];
 int lenword = 0;
 int replace[10000];
 int t;
@@ -188,17 +175,14 @@ while (1 == 1) {
         printf("\n");
     }
 }
-return 0;
+return 0; }
 </code></pre>
 
-<p>}</p>
+<p>int check(char *s, char *b, int small)
+{
+    int i = 0, j = 0;</p>
 
-<p>int check(char <em>s, char </em>b, int small)
-{</p>
-
-<pre><code>int i = 0, j = 0;
-
-while (s[i] == b[j]) {
+<pre><code>while (s[i] == b[j]) {
     i++;
     j++;
     if (i &gt;= small) {
@@ -214,11 +198,8 @@ while (s[i] == b[j]) {
     }
 }
 
-return 0;
+return 0; } ```
 </code></pre>
-
-<p>}
-```</p>
 ]]></content>
   </entry>
   
