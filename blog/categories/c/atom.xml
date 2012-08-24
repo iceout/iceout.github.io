@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 笔记 | iceout's blog]]></title>
-  <link href="http://iceout.github.com/blog/categories/笔记/atom.xml" rel="self"/>
+  <title><![CDATA[Category: C | iceout's blog]]></title>
+  <link href="http://iceout.github.com/blog/categories/c/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
   <updated>2012-08-24T10:28:23+08:00</updated>
   <id>http://iceout.github.com/</id>
@@ -805,18 +805,6 @@ int u = apricot[i][j][k];
 数组指针   char (*c)[9];        char(*c)[9]; 不改变
 指针的指针 char **c;            char **c;    不改变
 </code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CLRS chapter8 Sorting in Linear Time]]></title>
-    <link href="http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/"/>
-    <updated>2012-06-15T16:42:00+08:00</updated>
-    <id>http://iceout.github.com/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time</id>
-    <content type="html"><![CDATA[<p>之前介绍的排序算法都是属于比较排序算法，他们的时间下界为<script type="math/tex">\Omega(n\lg n)</script>。而一些非比较算法的时间复杂度可以为<script type="math/tex">\Theta(n)</script>。</p>
-
-<h2 id="section">1.排序算法的时间下界</h2>
 
 ]]></content>
   </entry>

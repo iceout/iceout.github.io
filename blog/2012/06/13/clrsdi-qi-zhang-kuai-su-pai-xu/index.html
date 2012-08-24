@@ -19,10 +19,7 @@
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript"
-   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
+    
     
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -93,7 +90,7 @@
 <h2 id="section">1.快速排序的描述</h2>
 <p>快速排序也是利用了分治的思想，先从数据集合里面选出一个元素作为主元（pivot element），根据主元把数据集分为两个子集，然后对子集进行快速排序。下面是代码描述：</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -138,7 +135,7 @@
 
 <p>在PARTITION开头处加入两行代码可以获得RANDOMIZED-PARTITION。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 </pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">i</span> <span class="o">=</span> <span class="n">RANDOM</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 </span><span class="line"><span class="n">exchange</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -166,8 +163,9 @@ X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij};
 
 <script type="math/tex; mode=display">Pr\{z_i与z_j进行比较\}=\frac{1}{j-i+1}+\frac{1}{j-i+1}=\frac{2}{j-i+1};</script>
 
-<script type="math/tex; mode=display">E[X]=\sum_{i=1}^{n-1}
-\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n);</script>
+<script type="math/tex; mode=display">% <![CDATA[
+E[X]=\sum_{i=1}^{n-1}
+\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n); %]]></script>
   </li>
 </ol>
 

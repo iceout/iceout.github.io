@@ -7,8 +7,8 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="使用python压缩文件夹 今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。 不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下： 1
-2 &hellip;">
+    <meta name="description" content="Expert C Programming 笔记 Chapter 2:
+分析编程语言的缺陷的一种方法是把缺陷分为三类:多做之过，少作之过和误做之过。 1. 多做之过 switch的case不加break就会一次执行下去。 const修饰的变量并不是真正的常量， &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -18,10 +18,7 @@
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript"
-   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
+    
     
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -88,13 +85,59 @@
 
 
     <article class="post">
+    <h1 class="title"><a href="/blog/2012/08/03/expert-c-programming-note/">Expert C Programming 笔记</a></h1>
+    <div class="entry">
+        <h2 id="chapter-2">Chapter 2:</h2>
+<p>分析编程语言的缺陷的一种方法是把缺陷分为三类:多做之过，少作之过和误做之过。</p>
+
+<h3 id="section">1. 多做之过</h3>
+<ol>
+  <li>switch的case不加break就会一次执行下去。</li>
+  <li>const修饰的变量并不是真正的常量，表现之一是无法在swith里当作case使用。</li>
+  <li>相邻的字符串常量自动合并为一个字符串。</li>
+  <li>太多的全局可见性。</li>
+</ol>
+
+
+        
+        <a href="/blog/2012/08/03/expert-c-programming-note/" class="more-link">Read on &rarr;</a>
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-03T13:48:00+08:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/c/'>C</a>, <a class='category' href='/blog/categories/笔记/'>笔记</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
     <h1 class="title"><a href="/blog/2012/08/01/shi-yong-pythonya-suo-wen-jian-jia/">使用python压缩文件夹</a></h1>
     <div class="entry">
         <p>今天在stackoverflow回答了一个用python压缩文件时处理空文件夹的问题，直接粘贴了一段以前找的代码作为答案，竟然获得了一个铜牌，实在是有点羞愧。</p>
 
 <p>不过那段代码压缩文件时是用的绝对路径,不太方便，为了安慰一下自己的心灵，现在改为相对路径，代码如下：</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -169,7 +212,7 @@
 
 <p>12.1-3 非递归 不用栈 中序遍历</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -302,7 +345,7 @@
 <h2 id="section">1.快速排序的描述</h2>
 <p>快速排序也是利用了分治的思想，先从数据集合里面选出一个元素作为主元（pivot element），根据主元把数据集分为两个子集，然后对子集进行快速排序。下面是代码描述：</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -347,7 +390,7 @@
 
 <p>在PARTITION开头处加入两行代码可以获得RANDOMIZED-PARTITION。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 </pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">i</span> <span class="o">=</span> <span class="n">RANDOM</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 </span><span class="line"><span class="n">exchange</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -375,8 +418,9 @@ X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij};
 
 <script type="math/tex; mode=display">Pr\{z_i与z_j进行比较\}=\frac{1}{j-i+1}+\frac{1}{j-i+1}=\frac{2}{j-i+1};</script>
 
-<script type="math/tex; mode=display">E[X]=\sum_{i=1}^{n-1}
-\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n);</script>
+<script type="math/tex; mode=display">% <![CDATA[
+E[X]=\sum_{i=1}^{n-1}
+\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n); %]]></script>
   </li>
 </ol>
 
@@ -656,83 +700,10 @@ other objects (even functions) or modules.</p>
     </div>
 </article>
 
-
-    <article class="post">
-    <h1 class="title"><a href="/blog/2012/04/21/hello-world/">Hello World</a></h1>
-    <div class="entry">
-        <h1 id="h1">h1</h1>
-
-<h2 id="h2">h2</h2>
-
-<h3 id="h3">h3</h3>
-
-<h2 id="latex">Latex</h2>
-
-<p><code>$$E = mc^2$$</code>的结果<script type="math/tex">E = mc^2</script></p>
-
-<p><code>\\(E=mc^2\\)</code>的结果\(E=mc^2\)</p>
-
-<h2 id="section">图片</h2>
-<p><img src="/uploads/Screenshot2.png" alt="octopress" title="God bless me!" />
-<img class="center" src="/uploads/Screenshot2.png" title="world peace #2" />
-left center right, center does not work.</p>
-
-<h2 id="c">C</h2>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>hello </span><a href="http://iceout.github.com/blog/2012/04/21/hello-world/">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="python">Python</h2>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">print</span> <span class="s">&#39;Hello, World!&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="java">Java</h2>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span /></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-        
-        
-    </div>
-    <div class="meta">
-        <div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-21T01:31:00+08:00" pubdate data-updated="true">Apr 21<span>st</span>, 2012</time></div>
-        <div class="tags">
-
-</div>
-        
-    </div>
-</article>
-
 <nav id="pagenavi">
     
+    
+        <a href="/blog/page/2/" class="next">Next</a>
     
     <a href="/blog/archives" class="center">Blog Archives</a>
 </nav></div>

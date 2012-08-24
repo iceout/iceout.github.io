@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 算法导论 | iceout's blog]]></title>
   <link href="http://iceout.github.com/blog/categories/算法导论/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-01T17:31:44+08:00</updated>
+  <updated>2012-08-24T10:28:23+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -137,8 +137,9 @@ X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij};
 
 <script type="math/tex; mode=display">Pr\{z_i与z_j进行比较\}=\frac{1}{j-i+1}+\frac{1}{j-i+1}=\frac{2}{j-i+1};</script>
 
-<script type="math/tex; mode=display">E[X]=\sum_{i=1}^{n-1}
-\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n);</script>
+<script type="math/tex; mode=display">% &lt;![CDATA[
+E[X]=\sum_{i=1}^{n-1}
+\sum_{j=i+1}^{n}\frac{2}{j-i+1}=\sum_{i=1}^{n-1} \sum_{k=1}^{n-i}\frac{2}{k+1}<\sum_{i=1}^{n-1} \sum_{k=1}^{n}\frac{2}{k}=O(n\lg n); %]]&gt;</script>
   </li>
 </ol>
 
