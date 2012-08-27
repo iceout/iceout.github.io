@@ -7,8 +7,8 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="Expert C Programming 笔记 Chapter 2:
-分析编程语言的缺陷的一种方法是把缺陷分为三类:多做之过，少作之过和误做之过。 1. 多做之过 switch的case不加break就会一次执行下去。 const修饰的变量并不是真正的常量， &hellip;">
+    <meta name="description" content="Chapter 15:Dynamic Promramming 动态规划的4个步骤: 找到最优子结构 递归定义最优解 按自底向上的方式计算最优解的值 由计算结果构造一个最优解 15.1-2
+可以用归纳法 Aug 27th, 2012 CLRS, 笔记 Expert C Programming 笔记 &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -18,7 +18,10 @@
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
+    <script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
     
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -82,6 +85,65 @@
 </script>
 
 	<div id="content" class="inner">
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/08/27/chapter-15-dynamic-promramming/">Chapter 15:Dynamic Promramming</a></h1>
+    <div class="entry">
+        <p>动态规划的4个步骤:</p>
+
+<ol>
+  <li>找到最优子结构</li>
+  <li>递归定义最优解</li>
+  <li>按自底向上的方式计算最优解的值</li>
+  <li>由计算结果构造一个最优解</li>
+</ol>
+
+<p>15.1-2
+可以用归纳法</p>
+
+<script type="math/tex; mode=display"> \because r_1(n) = r_2(n) = 1 = 2^0 = 2^{n-n}; r_1(j) = r_2(j) = r_1(j+1) + r_2(j+1) </script>
+
+<script type="math/tex; mode=display"> \therefore r_1(n-1) =  r_1(n) + r_2(n) = 2 = 2^1 </script>
+
+<script type="math/tex; mode=display"> \forall k, r_1(n-k) = r_2(n-k) = 2^k; </script>
+
+<script type="math/tex; mode=display"> r_1(n-k-1) = r_2(n-k-1) = r_1(n-k) + r_2(n-k) = 2^k + 2^K = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(n-k-1) = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
+
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-27T10:19:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/clrs/'>CLRS</a>, <a class='category' href='/blog/categories/笔记/'>笔记</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
 
 
     <article class="post">
@@ -644,56 +706,6 @@ other objects (even functions) or modules.</p>
 
 <time datetime="2012-05-22T16:48:00+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2012</time></div>
         <div class="tags">
-
-</div>
-        
-    </div>
-</article>
-
-
-    <article class="post">
-    <h1 class="title"><a href="/blog/2012/05/07/poj-1035/">Poj 1035:Spell Checker</a></h1>
-    <div class="entry">
-        <h2 id="section">题目说明</h2>
-<p><a href="http://poj.org/problem?id=1035">原题在这里。</a></p>
-
-<p>很简单的一道题，输入分为两部分，首先是一个字典,最多包含10000个词语。以一个“#”作为字典的结束。
-剩余部分为需要检查的词语，也是以“#”结束。</p>
-
-<p>所有的词语都是由小写字母组成，最多包含15个字母。每个词占语一行。
-如果所检查的词语正确则输出“is correct”，否则则根据三条规则输出相近的词语。三条规则如下：</p>
-
-<ul>
-  <li>leting of one letter from the word;</li>
-  <li>replacing of one letter in the word with an arbitrary letter;</li>
-  <li>inserting of one arbitrary letter into the word. </li>
-</ul>
-
-
-        
-        <a href="/blog/2012/05/07/poj-1035/" class="more-link">Read on &rarr;</a>
-    </div>
-    <div class="meta">
-        <div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-07T12:36:00+08:00" pubdate data-updated="true">May 7<span>th</span>, 2012</time></div>
-        <div class="tags">
-
-<div class="cat">
-  
-    <a class='category' href='/blog/categories/poj/'>poj</a>
-  
-</div>
 
 </div>
         

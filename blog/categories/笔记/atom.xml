@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 笔记 | iceout's blog]]></title>
   <link href="http://iceout.github.com/blog/categories/笔记/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-24T10:28:23+08:00</updated>
+  <updated>2012-08-27T11:25:32+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Chapter 15:Dynamic Promramming]]></title>
+    <link href="http://iceout.github.com/blog/2012/08/27/chapter-15-dynamic-promramming/"/>
+    <updated>2012-08-27T10:19:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/08/27/chapter-15-dynamic-promramming</id>
+    <content type="html"><![CDATA[<p>动态规划的4个步骤:</p>
+
+<ol>
+  <li>找到最优子结构</li>
+  <li>递归定义最优解</li>
+  <li>按自底向上的方式计算最优解的值</li>
+  <li>由计算结果构造一个最优解</li>
+</ol>
+
+<p>15.1-2
+可以用归纳法</p>
+
+<script type="math/tex; mode=display"> \because r_1(n) = r_2(n) = 1 = 2^0 = 2^{n-n}; r_1(j) = r_2(j) = r_1(j+1) + r_2(j+1) </script>
+
+<script type="math/tex; mode=display"> \therefore r_1(n-1) =  r_1(n) + r_2(n) = 2 = 2^1 </script>
+
+<script type="math/tex; mode=display"> \forall k, r_1(n-k) = r_2(n-k) = 2^k; </script>
+
+<script type="math/tex; mode=display"> r_1(n-k-1) = r_2(n-k-1) = r_1(n-k) + r_2(n-k) = 2^k + 2^K = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(n-k-1) = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Expert C Programming 笔记]]></title>

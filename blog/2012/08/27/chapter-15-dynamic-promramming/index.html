@@ -3,11 +3,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Category: 笔记 - iceout's blog</title>
+    <title>Chapter 15:Dynamic Promramming - iceout's blog</title>
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="Category: 笔记">
+    <meta name="description" content="Chapter 15:Dynamic Promramming 动态规划的4个步骤: 找到最优子结构 递归定义最优解 按自底向上的方式计算最优解的值 由计算结果构造一个最优解 15.1-2
+可以用归纳法 Aug 27th, 2012 CLRS, 笔记 Comments Please enable &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -83,19 +84,48 @@
 	})(jQuery);
 </script>
 
-	<div id="content" class="inner">
-<section class="archive">
-	
-	
-		
-		<h1 class="archive-title">2012</h1>
-	
-	<article class="archive">
-		
-<h1 class="title"><a href="/blog/2012/08/27/chapter-15-dynamic-promramming/">Chapter 15:Dynamic Promramming</a></h1>
-<div class="meta">
-	<span class="date">Aug 27</span>
-	<span class="tags">
+	<div id="content" class="inner"><article class="post">
+    <h1 class="title">Chapter 15:Dynamic Promramming</h1>
+    <div class="entry"><p>动态规划的4个步骤:</p>
+
+<ol>
+  <li>找到最优子结构</li>
+  <li>递归定义最优解</li>
+  <li>按自底向上的方式计算最优解的值</li>
+  <li>由计算结果构造一个最优解</li>
+</ol>
+
+<p>15.1-2
+可以用归纳法</p>
+
+<script type="math/tex; mode=display"> \because r_1(n) = r_2(n) = 1 = 2^0 = 2^{n-n}; r_1(j) = r_2(j) = r_1(j+1) + r_2(j+1) </script>
+
+<script type="math/tex; mode=display"> \therefore r_1(n-1) =  r_1(n) + r_2(n) = 2 = 2^1 </script>
+
+<script type="math/tex; mode=display"> \forall k, r_1(n-k) = r_2(n-k) = 2^k; </script>
+
+<script type="math/tex; mode=display"> r_1(n-k-1) = r_2(n-k-1) = r_1(n-k) + r_2(n-k) = 2^k + 2^K = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(n-k-1) = 2^{k+1} </script>
+
+<script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
+
+</div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-27T10:19:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2012</time></div>
+        <div class="tags">
 
 <div class="cat">
   
@@ -103,62 +133,30 @@
   
 </div>
 
-</span>
-    
-    <span class="comments"><a href="/blog/2012/08/27/chapter-15-dynamic-promramming/#disqus_thread">Comments</a></span>
-    
 </div>
-	</article>
+        
+    </div>
+</article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
 </section>
-
-<section class="archive">
-	
-	
-	<article class="archive">
-		
-<h1 class="title"><a href="/blog/2012/08/03/expert-c-programming-note/">Expert C Programming 笔记</a></h1>
-<div class="meta">
-	<span class="date">Aug  3</span>
-	<span class="tags">
-
-<div class="cat">
-  
-    <a class='category' href='/blog/categories/c/'>C</a>, <a class='category' href='/blog/categories/笔记/'>笔记</a>
-  
-</div>
-
-</span>
-    
-    <span class="comments"><a href="/blog/2012/08/03/expert-c-programming-note/#disqus_thread">Comments</a></span>
-    
-</div>
-	</article>
-</section>
-
-<section class="archive">
-	
-	
-	<article class="archive">
-		
-<h1 class="title"><a href="/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/">CLRS chapter8 Sorting in Linear Time</a></h1>
-<div class="meta">
-	<span class="date">Jun 15</span>
-	<span class="tags">
-
-<div class="cat">
-  
-    <a class='category' href='/blog/categories/笔记/'>笔记</a>, <a class='category' href='/blog/categories/算法导论/'>算法导论</a>
-  
-</div>
-
-</span>
-    
-    <span class="comments"><a href="/blog/2012/06/15/clrs-chapter8-sorting-in-linear-time/#disqus_thread">Comments</a></span>
-    
-</div>
-	</article>
-</section>
-
 </div>
 	<footer class="inner">Copyright &copy; 2012 iceout's blog</footer>
 	<script src="/javascripts/jquery.fancybox.pack.js"></script>
@@ -169,7 +167,10 @@
       var disqus_shortname = 'iceoutgithubblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://iceout.github.com/blog/2012/08/27/chapter-15-dynamic-promramming/';
+        var disqus_url = 'http://iceout.github.com/blog/2012/08/27/chapter-15-dynamic-promramming/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
