@@ -8,7 +8,8 @@
 
     
     <meta name="description" content="Chapter 15:Dynamic Promramming 动态规划的4个步骤: 找到最优子结构 递归定义最优解 按自底向上的方式计算最优解的值 由计算结果构造一个最优解 15.1-2
-可以用归纳法 Aug 27th, 2012 CLRS, 笔记 Comments Please enable &hellip;">
+可以用归纳法 15.1-4
+的值只与相关,所以可以从$2n$缩减为$2$个._ 15.2-2 MATRIX- &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -109,6 +110,20 @@
 <script type="math/tex; mode=display"> r_i(n-k-1) = 2^{k+1} </script>
 
 <script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
+
+<p>15.1-4
+<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从$2n$缩减为$2$个._</p>
+
+<p>15.2-2</p>
+
+<pre><code>MATRIX-CHAIN-MULTIPLY(A, s, i, j)
+    if i &lt; j
+        x = MATRIX-CHAIN-MULTIPLY(A, s, s(i,j), j)
+        y = MATRIX-CHAIN-MULTIPLY(A, s, s(i,j)+1, j)
+        return MATRIX-MULTIPLY(x, y)
+    else
+        return Ai
+</code></pre>
 
 </div>
     <div class="meta">

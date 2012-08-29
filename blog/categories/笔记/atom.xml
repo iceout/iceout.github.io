@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 笔记 | iceout's blog]]></title>
   <link href="http://iceout.github.com/blog/categories/笔记/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-27T11:25:32+08:00</updated>
+  <updated>2012-08-29T22:23:57+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -41,6 +41,20 @@
 <script type="math/tex; mode=display"> r_i(n-k-1) = 2^{k+1} </script>
 
 <script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
+
+<p>15.1-4
+<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从$2n$缩减为$2$个._</p>
+
+<p>15.2-2</p>
+
+<pre><code>MATRIX-CHAIN-MULTIPLY(A, s, i, j)
+    if i &lt; j
+        x = MATRIX-CHAIN-MULTIPLY(A, s, s(i,j), j)
+        y = MATRIX-CHAIN-MULTIPLY(A, s, s(i,j)+1, j)
+        return MATRIX-MULTIPLY(x, y)
+    else
+        return Ai
+</code></pre>
 
 ]]></content>
   </entry>
