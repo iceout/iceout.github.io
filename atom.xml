@@ -4,7 +4,7 @@
   <title><![CDATA[iceout's blog]]></title>
   <link href="http://iceout.github.com/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-29T22:23:57+08:00</updated>
+  <updated>2012-08-30T17:33:43+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[动态规划练习]]></title>
+    <link href="http://iceout.github.com/blog/2012/08/30/dong-tai-gui-hua-lian-xi/"/>
+    <updated>2012-08-30T16:01:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/08/30/dong-tai-gui-hua-lian-xi</id>
+    <content type="html"><![CDATA[<h2 id="section">1.扔鸡蛋问题</h2>
+
+<p>有k个鸡蛋,软硬度一样,还有一座n层的建筑,求鸡蛋可以安全落下的最高位置m,即鸡蛋从m层落下时不会摔破,从m+1层落下时会摔破.
+要求实验的次数最少.</p>
+
+<p>思路:如果鸡蛋的个数大于<script type="math/tex">\log n</script>则可以使用折半查找的方法.但现在鸡蛋个数有限,碎了就没了,而且白白摔碎太可惜了,母鸡会心疼的,所以,我们使用动态规划的方法.
+设f(n, k)为n层楼,k个鸡蛋所需的最少尝试次数.假设选定在第r(r=1,2,…,n)层尝试,这会有两个结果:</p>
+
+<ol>
+  <li>鸡蛋碎了,则鸡蛋个数变为k-1个,我们需要在r-1层之间进行第二次尝试,即<code>f(n, k)=1+f(r-1, k-1)</code>;</li>
+  <li>鸡蛋没碎,则<code>f(n, k)=1+f(n-r, k)</code>.</li>
+</ol>
+
+<p>把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
+
+<p>对于每个r都要计算一边,即<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) )</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>eggs  (eggs.c)</span> <a href="http://iceout.github.com/downloads/code/eggs.c">download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm"> * =====================================================================================</span>
+</span><span class="line"><span class="cm"> *</span>
+</span><span class="line"><span class="cm"> *       Filename:  eggs.c</span>
+</span><span class="line"><span class="cm"> *</span>
+</span><span class="line"><span class="cm"> *    Description:  N层楼,K个鸡蛋,在某一层之下扔鸡蛋不会碎,问至少测试多少次才能测试出来这个层数</span>
+</span><span class="line"><span class="cm"> *</span>
+</span><span class="line"><span class="cm"> *        Version:  1.0</span>
+</span><span class="line"><span class="cm"> *        Created:  08/25/2012 02:29:55 PM</span>
+</span><span class="line"><span class="cm"> *       Revision:  none</span>
+</span><span class="line"><span class="cm"> *       Compiler:  gcc</span>
+</span><span class="line"><span class="cm"> *</span>
+</span><span class="line"><span class="cm"> *         Author:  iceout (), ice.404.out@gmail.com</span>
+</span><span class="line"><span class="cm"> *   Organization:  </span>
+</span><span class="line"><span class="cm"> *</span>
+</span><span class="line"><span class="cm"> * =====================================================================================</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">result</span><span class="p">[</span><span class="mi">300</span><span class="p">][</span><span class="mi">50</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="n">eggs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">r</span><span class="p">;</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">max</span><span class="p">,</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="n">temp</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span><span class="line">            <span class="k">for</span> <span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">;</span> <span class="n">r</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                <span class="n">max</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">r</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">?</span> <span class="n">result</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">:</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">r</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span><span class="line">                <span class="n">max</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">                <span class="k">if</span> <span class="p">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                    <span class="n">temp</span> <span class="o">=</span> <span class="n">max</span><span class="p">;</span>
+</span><span class="line">                <span class="p">}</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">k</span><span class="p">]);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">eggs</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="battle-ships">2.Battle ships</h2>
+
+<p>原题见[链接][zoj3623].</p>
+
+<p>设f(n)表示时间为n时最多打掉防御塔多少血量.</p>
+
+<p><a href="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3623">zoj3623</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Chapter 15:Dynamic Promramming]]></title>
@@ -43,7 +191,7 @@
 <script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
 
 <p>15.1-4
-<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从$2n$缩减为$2$个._</p>
+<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从2n缩减为2个._</p>
 
 <p>15.2-2</p>
 
@@ -56,6 +204,19 @@
         return Ai
 </code></pre>
 
+<p>15.2-4</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^n \sum_{j=i}^n R(i, j) = \sum_{l=2}^n 2(n-l+1)(l-1) </script>
+
+<script type="math/tex; mode=display">= 2\sum_{l=1}^{n-1} (n-l)l </script>
+
+<script type="math/tex; mode=display">= 2 \sum_{l=1}^{n-1}nl - 2 \sum_{l=1}^{n-1}l^2</script>
+
+<script type="math/tex; mode=display">= 2 \frac{n^2(n-1)}{2} - 2\frac{(n-1)n(2n-1)}{6}</script>
+
+<script type="math/tex; mode=display">= n^3 - n^2 - \frac{2n^3-3n^2+n}{3}</script>
+
+<script type="math/tex; mode=display">= \frac{n^3-n}{3}</script>
 ]]></content>
   </entry>
   

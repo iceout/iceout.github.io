@@ -9,7 +9,7 @@
     
     <meta name="description" content="Chapter 15:Dynamic Promramming 动态规划的4个步骤: 找到最优子结构 递归定义最优解 按自底向上的方式计算最优解的值 由计算结果构造一个最优解 15.1-2
 可以用归纳法 15.1-4
-的值只与相关,所以可以从$2n$缩减为$2$个._ 15.2-2 MATRIX- &hellip;">
+的值只与相关,所以可以从2n缩减为2个._ 15.2-2 MATRIX- &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -112,7 +112,7 @@
 <script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
 
 <p>15.1-4
-<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从$2n$缩减为$2$个._</p>
+<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从2n缩减为2个._</p>
 
 <p>15.2-2</p>
 
@@ -125,6 +125,19 @@
         return Ai
 </code></pre>
 
+<p>15.2-4</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^n \sum_{j=i}^n R(i, j) = \sum_{l=2}^n 2(n-l+1)(l-1) </script>
+
+<script type="math/tex; mode=display">= 2\sum_{l=1}^{n-1} (n-l)l </script>
+
+<script type="math/tex; mode=display">= 2 \sum_{l=1}^{n-1}nl - 2 \sum_{l=1}^{n-1}l^2</script>
+
+<script type="math/tex; mode=display">= 2 \frac{n^2(n-1)}{2} - 2\frac{(n-1)n(2n-1)}{6}</script>
+
+<script type="math/tex; mode=display">= n^3 - n^2 - \frac{2n^3-3n^2+n}{3}</script>
+
+<script type="math/tex; mode=display">= \frac{n^3-n}{3}</script>
 </div>
     <div class="meta">
         <div class="date">

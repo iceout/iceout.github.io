@@ -7,9 +7,8 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="Chapter 15:Dynamic Promramming 动态规划的4个步骤: 找到最优子结构 递归定义最优解 按自底向上的方式计算最优解的值 由计算结果构造一个最优解 15.1-2
-可以用归纳法 15.1-4
-的值只与相关,所以可以从$2n$缩减为$2$个._ 15.2-2 MATRIX- &hellip;">
+    <meta name="description" content="动态规划练习 1.扔鸡蛋问题 有k个鸡蛋,软硬度一样,还有一座n层的建筑,求鸡蛋可以安全落下的最高位置m,即鸡蛋从m层落下时不会摔破,从m+1层落下时会摔破.
+要求实验的次数最少. 思路:如果鸡蛋的个数大于则可以使用折半查找的方法.但现在鸡蛋个数有限,碎了就没了,而且白白摔碎太可惜了, &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -89,6 +88,58 @@
 
 
     <article class="post">
+    <h1 class="title"><a href="/blog/2012/08/30/dong-tai-gui-hua-lian-xi/">动态规划练习</a></h1>
+    <div class="entry">
+        <h2 id="section">1.扔鸡蛋问题</h2>
+
+<p>有k个鸡蛋,软硬度一样,还有一座n层的建筑,求鸡蛋可以安全落下的最高位置m,即鸡蛋从m层落下时不会摔破,从m+1层落下时会摔破.
+要求实验的次数最少.</p>
+
+<p>思路:如果鸡蛋的个数大于<script type="math/tex">\log n</script>则可以使用折半查找的方法.但现在鸡蛋个数有限,碎了就没了,而且白白摔碎太可惜了,母鸡会心疼的,所以,我们使用动态规划的方法.
+设f(n, k)为n层楼,k个鸡蛋所需的最少尝试次数.假设选定在第r(r=1,2,…,n)层尝试,这会有两个结果:</p>
+
+<ol>
+  <li>鸡蛋碎了,则鸡蛋个数变为k-1个,我们需要在r-1层之间进行第二次尝试,即<code>f(n, k)=1+f(r-1, k-1)</code>;</li>
+  <li>鸡蛋没碎,则<code>f(n, k)=1+f(n-r, k)</code>.</li>
+</ol>
+
+<p>把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
+
+<p>对于每个r都要计算一边,即<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) )</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+
+
+        
+        <a href="/blog/2012/08/30/dong-tai-gui-hua-lian-xi/" class="more-link">Read on &rarr;</a>
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-30T16:01:00+08:00" pubdate data-updated="true">Aug 30<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/programming/'>programming</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
     <h1 class="title"><a href="/blog/2012/08/27/chapter-15-dynamic-promramming/">Chapter 15:Dynamic Promramming</a></h1>
     <div class="entry">
         <p>动态规划的4个步骤:</p>
@@ -116,7 +167,7 @@
 <script type="math/tex; mode=display"> r_i(j) = 2^{n-j} </script>
 
 <p>15.1-4
-<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从$2n$缩减为$2$个._</p>
+<script type="math/tex">f_i[j]</script>的值只与<script type="math/tex">f_i[j-1]</script>相关,所以可以从2n缩减为2个._</p>
 
 <p>15.2-2</p>
 
@@ -129,6 +180,19 @@
         return Ai
 </code></pre>
 
+<p>15.2-4</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^n \sum_{j=i}^n R(i, j) = \sum_{l=2}^n 2(n-l+1)(l-1) </script>
+
+<script type="math/tex; mode=display">= 2\sum_{l=1}^{n-1} (n-l)l </script>
+
+<script type="math/tex; mode=display">= 2 \sum_{l=1}^{n-1}nl - 2 \sum_{l=1}^{n-1}l^2</script>
+
+<script type="math/tex; mode=display">= 2 \frac{n^2(n-1)}{2} - 2\frac{(n-1)n(2n-1)}{6}</script>
+
+<script type="math/tex; mode=display">= n^3 - n^2 - \frac{2n^3-3n^2+n}{3}</script>
+
+<script type="math/tex; mode=display">= \frac{n^3-n}{3}</script>
 
         
         
@@ -687,40 +751,6 @@ other objects (even functions) or modules.</p>
     <a class='category' href='/blog/categories/python/'>python</a>
   
 </div>
-
-</div>
-        
-    </div>
-</article>
-
-
-    <article class="post">
-    <h1 class="title"><a href="/blog/2012/05/22/a-program-of-changing-keyboard-mapping/">A Program of Changing Keyboard Mapping</a></h1>
-    <div class="entry">
-        <h2 id="section">一个修改键盘映射的程序</h2>
-
-<p>以前修改别人的代码而成的键盘映射程序，今天无意中看到了，共享一下。
-该程序把1,2,3和4（非小键盘）四个键分别映射成为a,b,c和d.
-具体代码见程序的136~191行。只在windows下有效。。。
-
-        
-        <a href="/blog/2012/05/22/a-program-of-changing-keyboard-mapping/" class="more-link">Read on &rarr;</a>
-    </div>
-    <div class="meta">
-        <div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-22T16:48:00+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2012</time></div>
-        <div class="tags">
 
 </div>
         
