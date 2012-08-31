@@ -4,7 +4,7 @@
   <title><![CDATA[Category: programming | iceout's blog]]></title>
   <link href="http://iceout.github.com/blog/categories/programming/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-30T17:33:43+08:00</updated>
+  <updated>2012-08-31T14:06:52+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -31,9 +31,9 @@
   <li>鸡蛋没碎,则<code>f(n, k)=1+f(n-r, k)</code>.</li>
 </ol>
 
-<p>把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
+<p>为了保证无论鸡蛋碎与不碎都能得到最高的安全位置,把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
 
-<p>对于每个r都要计算一边,即<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) )</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+<p>为了取得最少的实验次数,<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
 
 <!-- more -->
 
@@ -152,11 +152,97 @@
 
 <h2 id="battle-ships">2.Battle ships</h2>
 
-<p>原题见[链接][zoj3623].</p>
+<p>原题见<a href="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3623">链接</a>.</p>
 
-<p>设f(n)表示时间为n时最多打掉防御塔多少血量.</p>
+<p>设f(n)表示时间为n时打掉防御塔多少血量,一共有k种武器可选,假设第一次选择制造第i(1&lt;=i&lt;=k)种武器,则这个武器一共可以消耗防御塔<code>l[i]*(n-t[i])</code>滴血,此时还剩余<code>n-t[i]</code>时间来建造其他武器,所以<code>f(n)=l[i]*(n-t[i])+f(n-t[i])</code>,这样求<code>f(n)</code>就变为求<code>f(n-t[i])</code>,形成了递归解.</p>
 
-<p><a href="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3623">zoj3623</a></p>
+<p>为了得到摧毁防御塔的最少时间,我们要找到<code>f(n)</code>的最大值,即<code>f(n)=max(l[i]*(n-t[i])+f(n-t[i])),1&lt;=i&lt;=k</code>.代码如下:</p>
+
+<p>```cpp</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int t[350],l[350];
+int result[350];
+void battleships() {
+    int N,L, i, j, temp;
+    while(scanf("%d %d",&amp;N,&amp;L)!=EOF) {
+        for(i=0;i&lt;N;i++) {
+            scanf("%d %d",&amp;t[i],&amp;l[i]);
+        }
+        memset(result,0,sizeof result);
+        for(i=2; i &lt; 350; i++) {
+            for(j=0; j &lt; N; j++) {
+                if(t[j]&lt;i) {
+                    temp = l[j]*(i-t[j])+result[i-t[j]];
+                    result[i]= temp &gt; result[i] ? temp : result[i];
+                }
+            }
+            if(result[i] &gt;= L) {
+                printf("%d\n", i);
+                break;
+            }
+        }
+    }
+
+}
+int main(int argc, char * const argv[])
+{
+    battleships();
+    return 0;
+}
+</code></pre>
+
+<p>```</p>
+
+<ol>
+  <li>
+    <h2 id="unrequited-love">Unrequited Love</h2>
+  </li>
+</ol>
+
+<p>原题见<a href="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemId=3701">链接</a>.由于选择第1个MM和选择第N个MM会相互造成影响,所以分两种情况计算,</p>
+
+<ol>
+  <li>一定不选择第N个MM</li>
+  <li>一定不选择第1个MM</li>
+</ol>
+
+<p>之后的思路和装配线调度问题差不多,就不在细说了.代码:</p>
+
+<p>```cpp
+#include <stdio.h>
+int happypoints[1000001];
+void unrequitedLove()
+{
+    int  N, i, temp;
+    int result[2], max;</stdio.h></p>
+
+<pre><code>while(scanf("%d",&amp;N)!=EOF) {
+    for (i = 0; i &lt; N; i++) {
+        scanf("%d",&amp;happypoints[i]);
+    }
+    result[0] = 0;
+    result[1] = happypoints[0];
+    for (i = 1; i &lt; N-1; i++) {
+        temp = result[0];
+        result[0] = result[0] &gt; result[1] ? result[0] : result[1];
+        result[1] = happypoints[i] + temp;
+    }
+    max = result[0] &gt; result[1] ? result[0] : result[1];
+    result[0] = 0;
+    result[1] = 0;
+    for (i = 1; i &lt; N; i++) {
+        temp = result[0];
+        result[0] = result[0] &gt; result[1] ? result[0] : result[1];
+        result[1] = happypoints[i] + temp;
+    }
+    temp = result[0] &gt; result[1] ? result[0] : result[1];
+    printf("%d\n", temp &gt; max ? temp : max);
+} } int main(int argc, char * const argv[]) {
+unrequitedLove();
+return 0; } ```
+</code></pre>
 
 ]]></content>
   </entry>

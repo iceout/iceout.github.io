@@ -103,9 +103,9 @@
   <li>鸡蛋没碎,则<code>f(n, k)=1+f(n-r, k)</code>.</li>
 </ol>
 
-<p>把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
+<p>为了保证无论鸡蛋碎与不碎都能得到最高的安全位置,把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
 
-<p>对于每个r都要计算一边,即<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) )</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+<p>为了取得最少的实验次数,<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
 
 
         
