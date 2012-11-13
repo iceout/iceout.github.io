@@ -4,7 +4,7 @@
   <title><![CDATA[iceout's blog]]></title>
   <link href="http://iceout.github.com/atom.xml" rel="self"/>
   <link href="http://iceout.github.com/"/>
-  <updated>2012-08-31T14:06:52+08:00</updated>
+  <updated>2012-11-13T22:32:17+08:00</updated>
   <id>http://iceout.github.com/</id>
   <author>
     <name><![CDATA[iceout]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[整除规则]]></title>
+    <link href="http://iceout.github.com/blog/2012/11/13/zheng-chu-gui-ze/"/>
+    <updated>2012-11-13T21:47:00+08:00</updated>
+    <id>http://iceout.github.com/blog/2012/11/13/zheng-chu-gui-ze</id>
+    <content type="html"><![CDATA[<p>今天在CPyUG上看到有关被7的整除的问题，以前只知道如何判断一个整数是否能被2,3,5整除，看了讨论才知道2-10都有简单的方法来判断。</p>
+
+<ol>
+  <li>
+    <p>被2整除</p>
+
+    <p>根据末位数字是否为偶数（0,2,4,6,8）判断。</p>
+  </li>
+  <li>
+    <p>被3整除</p>
+
+    <p>根据各位上数字之和能否被3整除，若和能被3整除则原数字也可。</p>
+
+    <p>简易说明：</p>
+
+<script type="math/tex; mode=display">10 \equiv 1 (mod 3)</script>
+
+<script type="math/tex; mode=display">10^n \equiv 1^n \equiv 1 (mod 3)</script>
+
+<script type="math/tex; mode=display">100 \cdot a + 10 \cdot b + c \equiv a + b + c (mod 3)</script>
+  </li>
+  <li>
+    <p>被4整除</p>
+
+    <p>根据末尾2位能否被4整除判断。这个方法的根据是<code>N</code>可以表示为<code>100*x+y</code>，<code>100*x</code>一定可以被4整除，所以只要<code>y</code>能被4整除，<code>N</code>就能被4整除。</p>
+
+    <p>还有其他方法如根据十位数字乘以二，加上个位数字判断。还有，</p>
+
+    <p>If the tens digit is even, and the ones digit is 0, 4, or 8.
+ If the tens digit is odd, and the ones digit is 2 or 6.</p>
+  </li>
+  <li>
+    <p>被5整除</p>
+
+    <p>根据末位数字是否为0或5判断。</p>
+  </li>
+  <li>
+    <p>被6整除</p>
+
+    <p>根据能否被3整除且是偶数。</p>
+  </li>
+  <li>
+    <p>被7整除</p>
+
+    <p>这个方法比较多，具体可查看维基百科，这里只介绍一种。
+ <code>N=10*x+y</code>，如果<code>x-2*y</code>可以被7整除，则<code>N</code>也可以。</p>
+
+    <p>证明：<code>10*x+y - 10*(x-2*y) = 21y</code>,<code>21y</code>一定可以被7整除，</p>
+
+    <p>如果<code>x-2*y</code>可以被7整除，那么<code>10*x+y</code>一定可以被7整除。</p>
+
+    <p>如果<code>10*x+y</code>能够被7整除，因为10一定不能被7整除，所以<code>x-2*y</code>一定能被7整除。</p>
+  </li>
+  <li>
+    <p>被8整除</p>
+
+    <p>检查末尾三位数字能否被8整除。</p>
+  </li>
+  <li>
+    <p>被9整除</p>
+
+    <p>根据各位上数字之和能否被9整除，若和能被3整除则原数字也可。</p>
+  </li>
+</ol>
+
+<p>参考资料见 <a href="https://en.wikipedia.org/wiki/Divisibility_rule">wiki</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[动态规划练习]]></title>
@@ -33,7 +107,7 @@
 
 <p>为了保证无论鸡蛋碎与不碎都能得到最高的安全位置,把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
 
-<p>为了取得最少的实验次数,<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+<p>选择不同的r会产生不同的f(n),因为要求实验次数最少,所以f(n)应该取其中的一个最小值,即<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
 
 <!-- more -->
 
@@ -156,7 +230,7 @@
 
 <p>设f(n)表示时间为n时打掉防御塔多少血量,一共有k种武器可选,假设第一次选择制造第i(1&lt;=i&lt;=k)种武器,则这个武器一共可以消耗防御塔<code>l[i]*(n-t[i])</code>滴血,此时还剩余<code>n-t[i]</code>时间来建造其他武器,所以<code>f(n)=l[i]*(n-t[i])+f(n-t[i])</code>,这样求<code>f(n)</code>就变为求<code>f(n-t[i])</code>,形成了递归解.</p>
 
-<p>为了得到摧毁防御塔的最少时间,我们要找到<code>f(n)</code>的最大值,即<code>f(n)=max(l[i]*(n-t[i])+f(n-t[i])),1&lt;=i&lt;=k</code>.代码如下:</p>
+<p>为了得到摧毁防御塔的最少时间,我们要对每个i都计算一次f(n),最终结果等于f(n)的最大值,即<code>f(n)=max(l[i]*(n-t[i])+f(n-t[i])),1&lt;=i&lt;=k</code>.代码如下:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -222,11 +296,7 @@
 </span><span class="line">    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>
-    <h2 id="unrequited-love">Unrequited Love</h2>
-  </li>
-</ol>
+<h2 id="unrequited-love">3.Unrequited Love</h2>
 
 <p>原题见<a href="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemId=3701">链接</a>.由于选择第1个MM和选择第N个MM会相互造成影响,所以分两种情况计算,</p>
 
@@ -383,7 +453,7 @@
 <ol>
   <li>switch的case不加break就会一次执行下去。</li>
   <li>const修饰的变量并不是真正的常量，表现之一是无法在swith里当作case使用。</li>
-  <li>相邻的字符串常量自动合并为一个字符串。</li>
+  <li>相邻的字符串常量自动合并为一个字符串。如”ab” “db\n” 其实是等于”abdb\n”.</li>
   <li>太多的全局可见性。</li>
 </ol>
 

@@ -7,8 +7,7 @@
     <meta name="author" content="iceout">
 
     
-    <meta name="description" content="动态规划练习 1.扔鸡蛋问题 有k个鸡蛋,软硬度一样,还有一座n层的建筑,求鸡蛋可以安全落下的最高位置m,即鸡蛋从m层落下时不会摔破,从m+1层落下时会摔破.
-要求实验的次数最少. 思路:如果鸡蛋的个数大于则可以使用折半查找的方法.但现在鸡蛋个数有限,碎了就没了,而且白白摔碎太可惜了, &hellip;">
+    <meta name="description" content="整除规则 今天在CPyUG上看到有关被7的整除的问题，以前只知道如何判断一个整数是否能被2,3,5整除，看了讨论才知道2-10都有简单的方法来判断。 被2整除 根据末位数字是否为偶数（0,2,4,6,8）判断。 被3整除 根据各位上数字之和能否被3整除，若和能被3整除则原数字也可。 简易说明： &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -88,6 +87,101 @@
 
 
     <article class="post">
+    <h1 class="title"><a href="/blog/2012/11/13/zheng-chu-gui-ze/">整除规则</a></h1>
+    <div class="entry">
+        <p>今天在CPyUG上看到有关被7的整除的问题，以前只知道如何判断一个整数是否能被2,3,5整除，看了讨论才知道2-10都有简单的方法来判断。</p>
+
+<ol>
+  <li>
+    <p>被2整除</p>
+
+    <p>根据末位数字是否为偶数（0,2,4,6,8）判断。</p>
+  </li>
+  <li>
+    <p>被3整除</p>
+
+    <p>根据各位上数字之和能否被3整除，若和能被3整除则原数字也可。</p>
+
+    <p>简易说明：</p>
+
+<script type="math/tex; mode=display">10 \equiv 1 (mod 3)</script>
+
+<script type="math/tex; mode=display">10^n \equiv 1^n \equiv 1 (mod 3)</script>
+
+<script type="math/tex; mode=display">100 \cdot a + 10 \cdot b + c \equiv a + b + c (mod 3)</script>
+  </li>
+  <li>
+    <p>被4整除</p>
+
+    <p>根据末尾2位能否被4整除判断。这个方法的根据是<code>N</code>可以表示为<code>100*x+y</code>，<code>100*x</code>一定可以被4整除，所以只要<code>y</code>能被4整除，<code>N</code>就能被4整除。</p>
+
+    <p>还有其他方法如根据十位数字乘以二，加上个位数字判断。还有，</p>
+
+    <p>If the tens digit is even, and the ones digit is 0, 4, or 8.
+ If the tens digit is odd, and the ones digit is 2 or 6.</p>
+  </li>
+  <li>
+    <p>被5整除</p>
+
+    <p>根据末位数字是否为0或5判断。</p>
+  </li>
+  <li>
+    <p>被6整除</p>
+
+    <p>根据能否被3整除且是偶数。</p>
+  </li>
+  <li>
+    <p>被7整除</p>
+
+    <p>这个方法比较多，具体可查看维基百科，这里只介绍一种。
+ <code>N=10*x+y</code>，如果<code>x-2*y</code>可以被7整除，则<code>N</code>也可以。</p>
+
+    <p>证明：<code>10*x+y - 10*(x-2*y) = 21y</code>,<code>21y</code>一定可以被7整除，</p>
+
+    <p>如果<code>x-2*y</code>可以被7整除，那么<code>10*x+y</code>一定可以被7整除。</p>
+
+    <p>如果<code>10*x+y</code>能够被7整除，因为10一定不能被7整除，所以<code>x-2*y</code>一定能被7整除。</p>
+  </li>
+  <li>
+    <p>被8整除</p>
+
+    <p>检查末尾三位数字能否被8整除。</p>
+  </li>
+  <li>
+    <p>被9整除</p>
+
+    <p>根据各位上数字之和能否被9整除，若和能被3整除则原数字也可。</p>
+  </li>
+</ol>
+
+<p>参考资料见 <a href="https://en.wikipedia.org/wiki/Divisibility_rule">wiki</a>.</p>
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-13T21:47:00+08:00" pubdate data-updated="true">Nov 13<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+</div>
+        
+    </div>
+</article>
+
+
+    <article class="post">
     <h1 class="title"><a href="/blog/2012/08/30/dong-tai-gui-hua-lian-xi/">动态规划练习</a></h1>
     <div class="entry">
         <h2 id="section">1.扔鸡蛋问题</h2>
@@ -105,7 +199,7 @@
 
 <p>为了保证无论鸡蛋碎与不碎都能得到最高的安全位置,把两种情况合并时要取他们中大的那一个,即<code>f(n, k)=1+max(f(r-1, k-1), f(n-r, k))</code>.</p>
 
-<p>为了取得最少的实验次数,<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
+<p>选择不同的r会产生不同的f(n),因为要求实验次数最少,所以f(n)应该取其中的一个最小值,即<code>f(n)</code>的递归定义为<code>f(n,k) = min ( 1+max(f(r-1, k-1), f(n-r, k)) ),r=1,2,...,n</code>,初始条件<code>f(i,1)=1,1&lt;=i&lt;=n, f(0,j)=0,1&lt;=j&lt;=k</code>. </p>
 
 
         
@@ -235,7 +329,7 @@
 <ol>
   <li>switch的case不加break就会一次执行下去。</li>
   <li>const修饰的变量并不是真正的常量，表现之一是无法在swith里当作case使用。</li>
-  <li>相邻的字符串常量自动合并为一个字符串。</li>
+  <li>相邻的字符串常量自动合并为一个字符串。如”ab” “db\n” 其实是等于”abdb\n”.</li>
   <li>太多的全局可见性。</li>
 </ol>
 
@@ -702,53 +796,6 @@ E[X]=\sum_{i=1}^{n-1}
 <div class="cat">
   
     <a class='category' href='/blog/categories/gtd/'>GTD</a>
-  
-</div>
-
-</div>
-        
-    </div>
-</article>
-
-
-    <article class="post">
-    <h1 class="title"><a href="/blog/2012/06/01/a-bug-of-python/">一个Python的bug</a></h1>
-    <div class="entry">
-        <p>昨天阿文同学在写python程序时遇到一个奇怪的错误，经过搜索发现原来是python的一个bug。
-python的说明在<a href="http://docs.python.org/c-api/init.html#Py_Finalize">这里</a>,
-主要是这句话:</p>
-
-<blockquote>
-  <p>The destruction of modules and objects in modules is done in <strong>random order</strong>;
-this may cause destructors (__del__() methods) to fail when they depend on
-other objects (even functions) or modules.</p>
-</blockquote>
-
-<p>由于析构的顺序是随机的，所以会遇到一些意想不到的问题。</p>
-
-
-        
-        <a href="/blog/2012/06/01/a-bug-of-python/" class="more-link">Read on &rarr;</a>
-    </div>
-    <div class="meta">
-        <div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-01T14:22:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2012</time></div>
-        <div class="tags">
-
-<div class="cat">
-  
-    <a class='category' href='/blog/categories/python/'>python</a>
   
 </div>
 
