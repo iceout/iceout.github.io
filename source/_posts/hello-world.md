@@ -43,7 +43,8 @@ More info: [Deployment](https://hexo.io/docs/deployment.html)
 ### Python
 
 ```python
-print('Hello, World!')
+def main():
+    print('Hello, World!')
 ```
 
 ### C
